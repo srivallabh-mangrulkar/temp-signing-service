@@ -2,7 +2,8 @@
 
 ## Signing Request to be sent:
 
-```curl --location 'localhost:3000/sign-meta-tx' \
+```
+curl --location 'localhost:3000/sign-meta-tx' \
 --header 'Content-Type: application/json' \
 --data '{
 	"chainId": 80001,
@@ -16,4 +17,5 @@
 		"nonce": "72",
 		"gas": "65000"
 	}
-}'```
+}'
+```
