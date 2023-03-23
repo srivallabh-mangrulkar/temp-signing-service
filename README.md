@@ -8,7 +8,8 @@ curl --location 'localhost:3000/contractAddress/{chainId}/{txnHash}'
 
 ## Signing Request to be sent:
 
-```curl --location 'localhost:3000/sign-meta-tx' \
+```
+curl --location 'localhost:3000/sign-meta-tx' \
 --header 'Content-Type: application/json' \
 --data '{
 	"chainId": 80001,
@@ -22,4 +23,5 @@ curl --location 'localhost:3000/contractAddress/{chainId}/{txnHash}'
 		"nonce": "72",
 		"gas": "65000"
 	}
-}'```
+}'
+```
