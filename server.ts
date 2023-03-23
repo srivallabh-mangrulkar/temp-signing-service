@@ -40,10 +40,36 @@ app.post("/sign-meta-tx", async (req: any, res: any) => {
   }
 });
 
+app.get("/contractAddress/:chainId/:txnHash", async (req: any, res: any) => {
+  const txHash: string = req.params.txnHash;
+  const chainId: string = req.params.chainId;
+  const networkMap: any = {
+    "80001" : "https://rpc-mumbai.maticvigil.com/",
+    "43113" : "https://api.avax-test.network/ext/bc/C/rpc",
+  };
+  const networkUrl = networkMap[chainId.toString()];
+  const provider = new ethers.providers.JsonRpcProvider(networkUrl);
+  try {
+    const txReceipt = await provider.getTransactionReceipt(txHash);
+
+    if (!txReceipt || !txReceipt.contractAddress) {
+      return res.status(404).send('Contract address not found for this transaction');
+    }
+
+    res.status(200).json({
+      contractAddress: txReceipt.contractAddress
+    });
+  } catch (err) {
+    console.error('fetching contract address failed due to', err);
+    res.status(500).send('Server error');
+  }
+});
+
 // Start the server
 app.listen(3000, () => {
   console.log("Server listening on port 3000");
 });
+
 
 export const FORWARDER_DOMAIN = {
   name: "MinimalForwarder",
@@ -70,6 +96,7 @@ export const FORWARDER_TYPES = {
     { name: "data", type: "bytes" },
   ],
 };
+
 
 export async function unsignedEip712Creator(
   from: string,

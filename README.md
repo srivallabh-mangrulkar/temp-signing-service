@@ -1,5 +1,11 @@
 # temp-signing-service
 
+## API to fetch contract Address
+
+```
+curl --location 'localhost:3000/contractAddress/{chainId}/{txnHash}'
+```
+
 ## Signing Request to be sent:
 
 ```curl --location 'localhost:3000/sign-meta-tx' \
