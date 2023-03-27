@@ -65,6 +65,26 @@ app.get("/contractAddress/:chainId/:txnHash", async (req: any, res: any) => {
   }
 });
 
+app.get("/unsignedEIP712", async (req: any, res: any) => {
+  try {
+    const eip712Transaction = await unsignedEip712Creator(
+      req.body.from,
+      req.body.to,
+      req.body.data,
+      req.body.value,
+      req.body.nonce,
+      req.body.gas,
+      req.body.forwarderHash,
+      req.body.chainId
+    );
+    res.status(200).json({
+      unsignedEIP712: eip712Transaction,
+    });
+  } catch (err: any) {
+    res.status(500).send("internal server error");
+  }
+});
+
 // Start the server
 app.listen(3000, () => {
   console.log("Server listening on port 3000");
